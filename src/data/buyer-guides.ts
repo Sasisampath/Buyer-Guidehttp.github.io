@@ -12,6 +12,8 @@ export type BuyerGuide = {
   description: string;
   platforms: number;
   words: number;
+  // Banner thumbnail (1672×941). The card title repeats its text, so it is decorative.
+  banner: string;
 };
 
 // The first sentence of an existing description, verbatim.
@@ -42,6 +44,7 @@ export const buyerGuides: BuyerGuide[] = [
     description: firstSentence(prmDescription),
     platforms: prmProducts.length,
     words: prmWords,
+    banner: `${prmRoute}/banner.webp`,
   },
   {
     href: channelRoute,
@@ -49,5 +52,6 @@ export const buyerGuides: BuyerGuide[] = [
     description: firstSentence(channelGuide.description),
     platforms: channelGuide.products.length,
     words: CHANNEL_MAIN_WORDS,
+    banner: `${channelRoute}/banner.webp`,
   },
 ];
