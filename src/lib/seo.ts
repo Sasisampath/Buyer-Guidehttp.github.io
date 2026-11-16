@@ -8,25 +8,16 @@ export const DEFAULT_DESCRIPTION =
 export const DEFAULT_OG_IMAGE = "/assets/WebsitePreview.png";
 export const DEFAULT_SITE_ICON = "/assets/logo/monogram.png";
 
-export const INDEXABLE_ROBOTS: NonNullable<Metadata["robots"]> = {
-  index: true,
-  follow: true,
-  googleBot: {
-    index: true,
-    follow: true,
-  },
-};
-
+// This standalone site is never indexed: every page uses these robots settings.
 export const NOINDEX_ROBOTS: NonNullable<Metadata["robots"]> = {
   index: false,
-  follow: true,
+  follow: false,
 };
 
 type PageSeoOptions = {
   title: string;
   description?: string;
   path: string;
-  indexable?: boolean;
   image?: string;
 };
 
@@ -60,7 +51,6 @@ export function pageSeo({
   title,
   description,
   path,
-  indexable = true,
   image = DEFAULT_OG_IMAGE,
 }: PageSeoOptions): Metadata {
   const url = canonicalUrl(path);
@@ -70,7 +60,7 @@ export function pageSeo({
     title,
     ...(description !== undefined ? { description } : {}),
     alternates: pageAlternates(path),
-    robots: indexable ? INDEXABLE_ROBOTS : NOINDEX_ROBOTS,
+    robots: NOINDEX_ROBOTS,
     openGraph: {
       type: "website",
       locale: "en_US",

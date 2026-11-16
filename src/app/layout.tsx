@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Header } from "@/components/layout/header";
+import { GridBackground } from "@/components/layout/grid-background";
 import { DEFAULT_SITE_ICON, NOINDEX_ROBOTS, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
@@ -12,6 +14,13 @@ export const metadata: Metadata = {
   robots: NOINDEX_ROBOTS,
 };
 
+// One Header (and, from Phase 4, one Footer) shared by every route.
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={inter.variable}><body>{children}</body></html>;
+  return <html lang="en" className={inter.variable}><body>
+    <GridBackground>
+      <a href="#guide-content" className="site-skip">Skip to guide</a>
+      <Header />
+      {children}
+    </GridBackground>
+  </body></html>;
 }
