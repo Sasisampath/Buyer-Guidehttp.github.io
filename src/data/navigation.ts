@@ -19,15 +19,4 @@ export const JOURNEYS: {key: JourneyKey; title: string; description: string; hre
  {key:"vendor",title:"I’m an AI Vendor",description:"List your product · Coming soon",href:null},
  {key:"partner",title:"I’m a Channel Partner",description:"Partner with AI companies · Coming soon",href:null},
 ];
-
-// Footer links. Only destinations verified verbatim in a source repo are kept;
-// items without one (Help & Support: Contact us, Privacy policy, Terms and
-// conditions; Legal: Privacy Policy, Terms of Service) were removed.
-export type FooterLink = { label: string; href: NavDestination };
-export const FOOTER_COMPANY: FooterLink[] = [{ label: "About us", href: "https://www.jazzhq.ai/about-us" }];
-export const FOOTER_BUYERS_GUIDES: FooterLink[] = [
-  { label: "All Buyer’s Guides", href: ROUTES.buyersGuides },
-  { label: "PRM Software Guide", href: ROUTES.prmGuide },
-  { label: "Channel Management Guide", href: ROUTES.channelGuide },
-];
-export const FOOTER_LEGAL: FooterLink[] = [];
+// Footer links live in src/data/footer.ts.

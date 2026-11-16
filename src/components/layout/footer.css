@@ -92,4 +92,10 @@
 .site-footer__col { min-width: 120px; }
 .site-footer [aria-disabled="true"] { cursor: default; opacity: .55; text-align: left; }
 @media(max-width:1023px){.site-footer__main{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)}}
+/* Buyer's Guides adds a fourth link column. From 1280px the nav takes its natural
+   width so the four columns share one row. Between 1280 and 1439px the AI section
+   moves below, using Euler's own tablet rule. From 1440px everything sits on one row. */
+@media(min-width:1280px){.site-footer__nav{flex-wrap:nowrap}.site-footer__col{min-width:0}}
+@media(min-width:1280px) and (max-width:1439px){.site-footer__main{grid-template-columns:minmax(0,1fr) auto}.site-footer__ai{grid-column:1/-1;padding:24px 0 0;border-left:0;border-top:1px solid rgb(255 255 255 / .12)}}
+@media(min-width:1440px){.site-footer__main{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}}
 @media(max-width:639px){.site-footer__main{grid-template-columns:minmax(0,1fr)}}

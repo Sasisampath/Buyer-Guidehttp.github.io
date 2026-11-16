@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FOOTER_BUYERS_GUIDES, FOOTER_COMPANY, FOOTER_LEGAL, ROUTES } from "@/data/navigation";
+import { footerColumns, footerLegal, type FooterLink } from "@/data/footer";
+import { ROUTES } from "@/data/navigation";
 import { NavItem } from "@/components/layout/nav-item";
 import { FooterAI } from "./footer-ai";
 import { FooterTip } from "./footer-tip";
@@ -21,7 +22,7 @@ const TRUST_MARKS = [
   { src: "/assets/trust/gdpr.png", title: "GDPR", description: "European Union regulation for data protection and privacy." },
 ] as const;
 
-function LinkColumn({ title, links }: { title: string; links: typeof FOOTER_COMPANY }) {
+function LinkColumn({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div className="site-footer__col">
       <p className="site-footer__title">{title}</p>
@@ -35,7 +36,7 @@ function LinkColumn({ title, links }: { title: string; links: typeof FOOTER_COMP
 }
 
 // Shared site footer. Self-contained: drop <Footer /> at the end of any page.
-// Links come from src/data/navigation.ts (href: null = shown but not wired yet).
+// Links come from src/data/footer.ts (href: null = shown but not wired yet).
 export function Footer() {
   const year = new Date().getFullYear();
 
@@ -78,8 +79,7 @@ export function Footer() {
             </div>
 
             <div className="site-footer__nav">
-              <LinkColumn title="Company" links={FOOTER_COMPANY} />
-              <LinkColumn title="Buyer’s Guides" links={FOOTER_BUYERS_GUIDES} />
+              {footerColumns.map((column) => <LinkColumn key={column.title} title={column.title} links={column.links} />)}
             </div>
 
             <div className="site-footer__ai">
@@ -90,13 +90,11 @@ export function Footer() {
 
           <div className="site-footer__bottom">
             <p>Copyright © JazzHQ Inc. {year}</p>
-            {FOOTER_LEGAL.length > 0 && (
-              <div className="site-footer__legal">
-                {FOOTER_LEGAL.map((link) => (
-                  <NavItem key={link.label} href={link.href} className="site-footer__link">{link.label}</NavItem>
-                ))}
-              </div>
-            )}
+            <div className="site-footer__legal">
+              {footerLegal.map((link) => (
+                <NavItem key={link.label} href={link.href} className="site-footer__link">{link.label}</NavItem>
+              ))}
+            </div>
           </div>
 
           {/* Closing brand mark: full white wordmark with a scroll-driven reveal. */}
