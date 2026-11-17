@@ -33,11 +33,12 @@ const prmWords = countWords(
 
 // AI coaching: all of the guide's reading text lives in its data file.
 export const aiCoachingWords = countWords(
-  aiCoaching.hero, aiCoaching.intro, aiCoaching.disclosure, aiCoaching.contentsLabel, aiCoaching.sections.map(([, label]) => label),
-  aiCoaching.criteria, aiCoaching.sectionCopy, aiCoaching.tableHeaders, aiCoaching.productLabels,
-  aiCoaching.products.map(({ name, fit, knownFor, intro, features, pros, cons, pricing, table }) =>
-    [name, fit, knownFor, intro, features, pros, cons, pricing, table]),
-  aiCoaching.rehearseExtras.ctaText, aiCoaching.lookFor, aiCoaching.recommendations, aiCoaching.faqs, aiCoaching.cta,
+  aiCoaching.hero, aiCoaching.intro, aiCoaching.note, aiCoaching.method, aiCoaching.contentsLabel, aiCoaching.sections.map(([, label]) => label),
+  aiCoaching.sectionCopy, aiCoaching.tableHeaders, aiCoaching.scrollHint, aiCoaching.productLabels,
+  aiCoaching.products.map(({ name, glanceName, tableName, fit, knownFor, intro, features, pros, cons, pricing, table }) =>
+    [name, glanceName, tableName, fit, knownFor, intro, features, pros, cons, pricing, table]),
+  aiCoaching.rehearseExtras.afterImage, aiCoaching.rehearseExtras.ctaText, aiCoaching.rehearseExtras.ctaLabel,
+  aiCoaching.lookFor, aiCoaching.recommendations, aiCoaching.faqs, aiCoaching.cta.text, aiCoaching.cta.label,
 );
 
 // Channel: some headings, the journey and the CTA are written in the page

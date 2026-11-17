@@ -3,14 +3,14 @@ import { BackLink } from "@/components/shared/back-link";
 import { ComparisonTable } from "@/components/shared/comparison-table";
 import { GuideCta } from "@/components/shared/guide-cta";
 import { GuideHero } from "@/components/shared/guide-hero";
-import { DefinitionRows, FaqList, NumberedList } from "@/components/shared/guide-lists";
+import { FaqList, NumberedList } from "@/components/shared/guide-lists";
 import { GuideSection } from "@/components/shared/guide-section";
 import { Details, Pair, ProductCard, Screenshot } from "@/components/shared/product-card";
 import { ReadingProgress } from "@/components/shared/reading-progress";
 import styles from "@/components/shared/guide.module.css";
 import { aiCoachingWords } from "@/data/buyer-guides";
 import {
-  contentsLabel, criteria, cta, description, disclosure, faqs, hero, intro, lookFor, productLabels, products,
+  contentsLabel, cta, description, faqs, hero, intro, lookFor, method, note, productLabels, products,
   recommendations, rehearseExtras, route, scrollHint, sectionCopy, sections, seoTitle, tableHeaders, title,
   type Product,
 } from "@/data/ai-coaching-guide";
@@ -25,20 +25,21 @@ const readingTime = readingMinutes(aiCoachingWords);
 
 const OWN_PRODUCT = "rehearse";
 
+// Card order follows the brief: screenshot, intro, (Rehearse: second screenshot
+// and closing intro line), key features, pros/cons, pricing, (Rehearse: CTA).
 function CoachingProduct({ product, index }: { product: Product; index: number }) {
   const own = product.id === OWN_PRODUCT;
   return <ProductCard id={product.id} index={index} title={product.name}
     subtitle={<><strong>{productLabels.bestFor}</strong> {product.fit}</>}
-    badge={own ? productLabels.badge : undefined}
-    sources={{ label: `${product.name} website`, links: [[`${productLabels.website}: ${new URL(product.url).hostname.replace(/^www\./u, "")}`, product.url]] }}>
+    sources={{ label: `${product.name} ${productLabels.website}`, links: [[`${productLabels.website}: ${new URL(product.url).hostname.replace(/^www\./u, "")}`, product.url]] }}>
+    <Screenshot src={`${route}/${product.id}.webp`} alt={product.image.alt} width={product.image.width} height={product.image.height} />
     <div className={styles.productIntro}>{product.intro.map(paragraph => <p key={paragraph} className={styles.prose}>{paragraph}</p>)}</div>
-    <Screenshot src={`${route}/${product.id}.webp`} alt={product.image.alt} width={product.image.width} height={product.image.height}
-      caption={`${product.name} ${productLabels.captionSuffix}`} />
-    <Details label={productLabels.features} variant="features" items={product.features.map(([label, detail]) => <><strong>{label}:</strong> {detail}</>)} />
-    {own && <div className={styles.inlineShot}>
+    {own && <>
       <Screenshot src={`${route}/${rehearseExtras.feedbackImage.src}`} alt={rehearseExtras.feedbackImage.alt}
-        width={rehearseExtras.feedbackImage.width} height={rehearseExtras.feedbackImage.height} caption="Rehearse · Roleplay results and evidence" />
-    </div>}
+        width={rehearseExtras.feedbackImage.width} height={rehearseExtras.feedbackImage.height} />
+      <div className={styles.productIntro}>{rehearseExtras.afterImage.map(paragraph => <p key={paragraph} className={styles.prose}>{paragraph}</p>)}</div>
+    </>}
+    <Details label={productLabels.features} variant="features" items={product.features.map(([label, detail]) => <><strong>{label}:</strong> {detail}</>)} />
     <Pair>
       <Details label={productLabels.pros} variant="pros" items={product.pros} />
       <Details label={productLabels.cons} variant="consider" items={product.cons} />
@@ -52,7 +53,7 @@ function CoachingProduct({ product, index }: { product: Product; index: number }
 }
 
 export default function AiCoachingPlatformsPage() {
-  const { glance, method, platforms, compare, lookFor: look, recommendations: rec, faq } = sectionCopy;
+  const { glance, platforms, compare, lookFor: look, recommendations: rec, faq } = sectionCopy;
   return <>
     <ReadingProgress />
     <main id="guide-content" tabIndex={-1} className={styles.page}>
@@ -62,11 +63,6 @@ export default function AiCoachingPlatformsPage() {
           eyebrow={<>{hero.eyebrow[0]} <span aria-hidden="true">{hero.eyebrow[1]}</span> {hero.eyebrow[2]}</>}
           title={hero.heading}
           subtitle={hero.subheading}
-          aside={<aside className={styles.heroAside} aria-label={hero.asideLabel}>
-            <p className={styles.eyebrow}>{hero.asideEyebrow}</p>
-            <dl>{hero.stats.map(([value, label]) => <div key={label}><dt>{value}</dt><dd>{label}</dd></div>)}</dl>
-            <p>{disclosure}</p>
-          </aside>}
         >
           <div className={styles.heroIntro}>{intro.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
           <div className={styles.heroActions}>
@@ -80,25 +76,22 @@ export default function AiCoachingPlatformsPage() {
         </nav>
 
         <GuideSection id="at-a-glance" titleId="glance-title" label={glance.label} title={glance.title}>
-          <p className={`${styles.prose} ${styles.lede}`}>{glance.lede}</p>
-          <ComparisonTable label="glance-title" compact headers={tableHeaders.glance}
-            rows={products.map(({ id, name, knownFor }) => ({ id, cells: [name, knownFor] }))} />
-        </GuideSection>
-
-        <GuideSection id="what-we-looked-at" titleId="method-title" label={method.label} title={method.title}>
+          <div className={styles.note}><strong>{note.title}</strong><p>{note.text}</p></div>
+          <h3 id="what-we-looked-at" className={styles.subheading}>{method.title}</h3>
           <p className={styles.prose}>{method.lede}</p>
-          <ul className={styles.criteria}>{criteria.map(item => <li key={item}><Check size={17} aria-hidden="true" />{item}</li>)}</ul>
+          <ul className={styles.criteria}>{method.criteria.map(item => <li key={item}><Check size={17} aria-hidden="true" /><span>{item}</span></li>)}</ul>
+          <p className={`${styles.prose} ${styles.lede}`}>{method.closing}</p>
+          <ComparisonTable label="glance-title" compact headers={tableHeaders.glance}
+            rows={products.map(({ id, glanceName, knownFor }) => ({ id, cells: [glanceName, knownFor] }))} />
         </GuideSection>
 
         <GuideSection id="platforms" titleId="platforms-title" label={platforms.label} title={platforms.title} variant="platforms">
-          <p className={`${styles.prose} ${styles.lede}`}>{platforms.lede}</p>
           <div className={styles.products}>{products.map((product, index) => <CoachingProduct key={product.id} product={product} index={index} />)}</div>
         </GuideSection>
 
         <GuideSection id="compare" titleId="compare-title" label={compare.label} title={compare.title}>
-          <p className={`${styles.prose} ${styles.lede}`}>{compare.lede}</p>
           <ComparisonTable label="compare-title" headers={tableHeaders.compare} hint={scrollHint}
-            rows={products.map(({ id, name, table }) => ({ id, cells: [name, table.bestFor, table.standout, table.price] }))} />
+            rows={products.map(({ id, tableName, table }) => ({ id, cells: [tableName, table.bestFor, table.standout, table.price] }))} />
         </GuideSection>
 
         <GuideSection id="what-to-look-for" titleId="look-title" label={look.label} title={look.title}>
@@ -110,16 +103,18 @@ export default function AiCoachingPlatformsPage() {
         </GuideSection>
 
         <GuideSection id="recommendations" titleId="rec-title" label={rec.label} title={rec.title}>
-          <p className={`${styles.prose} ${styles.lede}`}>{recommendations.lede}</p>
-          <DefinitionRows items={recommendations.items} />
-          <p className={`${styles.prose} ${styles.closingLine}`}>{recommendations.closing}</p>
+          <div className={styles.verdict}>
+            <p>{recommendations.lede}</p>
+            {recommendations.items.map(item => <p key={item}>{item}</p>)}
+            <p className={styles.closingLine}>{recommendations.closing}</p>
+          </div>
         </GuideSection>
 
         <GuideSection id="faq" titleId="faq-title" label={faq.label} title={faq.title}>
           <FaqList items={faqs} numbered openFirst marker="+" />
         </GuideSection>
 
-        <GuideCta title={cta.title} text={cta.text} href={cta.href} label={cta.label} icon={<ArrowRight size={17} aria-hidden="true" />} />
+        <GuideCta text={cta.text} href={cta.href} label={cta.label} icon={<ArrowRight size={17} aria-hidden="true" />} />
       </article>
     </main>
   </>;

@@ -23,13 +23,15 @@ export function DefinitionRows({ items }: { items: readonly (readonly [label: st
   return <dl className={styles.definitions}>{items.map(([label, detail]) => <div key={label}><dt>{label}</dt><dd>{detail}</dd></div>)}</dl>;
 }
 
-// FAQ accordion. Optional numbering, first item open, and a text marker.
+// FAQ accordion. Optional numbering, first item open, a text marker, and
+// answers given as one string or as several paragraphs.
 export function FaqList({ items, numbered = false, openFirst = false, marker }: {
-  items: readonly (readonly [question: string, answer: string])[]; numbered?: boolean; openFirst?: boolean; marker?: string;
+  items: readonly (readonly [question: string, answer: string | readonly string[]])[]; numbered?: boolean; openFirst?: boolean; marker?: string;
 }) {
   return <div className={styles.faqList}>{items.map(([question, answer], index) =>
     <details key={question} open={openFirst && index === 0}>
-      <summary>{numbered ? `${index + 1}. ${question}` : question}<span aria-hidden="true">{marker}</span></summary><p>{answer}</p>
+      <summary>{numbered ? `${index + 1}. ${question}` : question}<span aria-hidden="true">{marker}</span></summary>
+      {typeof answer === "string" ? <p>{answer}</p> : answer.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
     </details>
   )}</div>;
 }
