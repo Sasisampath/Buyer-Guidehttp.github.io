@@ -1,3 +1,4 @@
+import * as aiCoaching from "@/data/ai-coaching-guide";
 import { guide as channelGuide, route as channelRoute } from "@/data/channel-guide";
 import { criteria, faqs, maturity, recommendations, strategy } from "@/data/prm-evaluation";
 import {
@@ -30,14 +31,31 @@ const prmWords = countWords(
   maturity, criteria, strategy, recommendations, faqs, cta,
 );
 
+// AI coaching: all of the guide's reading text lives in its data file.
+export const aiCoachingWords = countWords(
+  aiCoaching.hero, aiCoaching.intro, aiCoaching.disclosure, aiCoaching.contentsLabel, aiCoaching.sections.map(([, label]) => label),
+  aiCoaching.criteria, aiCoaching.sectionCopy, aiCoaching.tableHeaders, aiCoaching.productLabels,
+  aiCoaching.products.map(({ name, fit, knownFor, intro, features, pros, cons, pricing, table }) =>
+    [name, fit, knownFor, intro, features, pros, cons, pricing, table]),
+  aiCoaching.rehearseExtras.ctaText, aiCoaching.lookFor, aiCoaching.recommendations, aiCoaching.faqs, aiCoaching.cta,
+);
+
 // Channel: some headings, the journey and the CTA are written in the page
 // component, so the count is measured from the rendered page instead:
 // 3343 words of visible <main> text (excluding navigation links), counted on
 // 2026-11-16 with _work/scripts/word-count.mjs. Recount when the copy changes.
 const CHANNEL_MAIN_WORDS = 3343;
 
-// Gallery order: PRM first, then Channel.
+// Gallery order: newest first (AI coaching), then PRM, then Channel.
 export const buyerGuides: BuyerGuide[] = [
+  {
+    href: aiCoaching.route,
+    title: aiCoaching.hero.heading,
+    description: firstSentence(aiCoaching.description),
+    platforms: aiCoaching.products.length,
+    words: aiCoachingWords,
+    banner: `${aiCoaching.route}/banner.webp`,
+  },
   {
     href: prmRoute,
     title: "10 Best Partner Relationship Management Software in 2026",

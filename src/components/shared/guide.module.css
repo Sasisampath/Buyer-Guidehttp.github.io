@@ -206,3 +206,17 @@
 @media (prefers-reduced-motion: reduce) {
   .faqList summary span:not(:empty) { transition: none; }
 }
+
+/* AI coaching guide: second in-card screenshot, standalone pricing box,
+   in-card call to action and a closing line after definition rows. */
+.inlineShot { margin-top: 22px; }
+.inlineShot .screenshot { margin-bottom: 0; }
+.pricingRow { margin-top: 12px; }
+.productCta { display: flex; align-items: center; justify-content: space-between; gap: 14px 24px; margin: 18px 0 0; }
+.productCta p { margin: 0; max-width: 70ch; line-height: 1.6; }
+.productCta .button { flex: 0 0 auto; }
+.guidance + .verdict { margin-top: 18px; }
+.closingLine { margin-top: 18px; font-weight: 600; }
+@media (max-width: 700px) {
+  .productCta { flex-direction: column; align-items: flex-start; }
+}
