@@ -48,6 +48,36 @@
 }
 .site-footer__wordmark-reveal:not(.is-scroll-reveal) .site-footer__wordmark--base { visibility: hidden; }
 
+/* Equalizer on the wordmark (ported from jazzhq-equalizer.html; same keyframes,
+   timings and easing). The bright layer is an inline copy of the wordmark SVG so
+   each letter can lift and show its LED meter. Letters keep their white fill. */
+.site-footer__wordmark-reveal svg.site-footer__wordmark { height: auto; overflow: visible; fill: #fff; }
+.mark-keys { position: absolute; inset: 0 0 12px; z-index: 1; display: flex; }
+.mark-keys button { appearance: none; min-width: 0; margin: 0; padding: 0; background: transparent; border: 0; border-radius: 4px; cursor: pointer; touch-action: manipulation; }
+.mark-keys button:focus-visible { outline: 2px solid #aaa1ff; outline-offset: 2px; }
+.mark-hit { animation: mark-lift 640ms ease-out both; }
+.mark-echo { animation: mark-lift 550ms 75ms ease-out both; --lift: -.8px; }
+.mark-column { transform-box: fill-box; animation: mark-level 670ms var(--lag) ease-out both; }
+.mark-echo .mark-meter { opacity: .65; }
+.mark-speaker { transform-origin: 350.6px 29.1px; }
+.mark-hit .mark-speaker, .mark-echo .mark-speaker { animation: mark-bass 700ms ease-out both; }
+@keyframes mark-lift { 0%, 100% { transform: translateY(0); } 18% { transform: translateY(var(--lift, -2px)); } 46% { transform: translateY(.25px); } }
+@keyframes mark-level {
+  0%, 100% { clip-path: inset(100% 0 0); }
+  14% { clip-path: inset(4% 0 0); }
+  30% { clip-path: inset(68% 0 0); }
+  43% { clip-path: inset(15% 0 0); }
+  60% { clip-path: inset(66% 0 0); }
+  73% { clip-path: inset(40% 0 0); }
+}
+@keyframes mark-bass { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.18); } 62% { transform: scale(.98); } }
+/* Reduced motion: no animation, no meters; the touched letter gets a static highlight. */
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__wordmark-reveal svg *, .site-footer__wordmark-reveal svg *::after { animation: none !important; }
+  .site-footer__wordmark-reveal .mark-meter { display: none; }
+  .mark-hit .mark-body { fill: #aaa1ff; }
+}
+
 /* Footer tooltips: above the mark, never affect layout. */
 .site-tip { position: relative; display: inline-flex; }
 .site-tip__panel { position: absolute; bottom: calc(100% + 10px); left: 50%; z-index: 20; display: grid; width: max-content; max-width: min(260px, 80vw); padding: 8px 12px; border: 1px solid rgb(255 255 255 / .14); border-radius: 12px; background: #151515; box-shadow: 0 8px 24px rgb(0 0 0 / .4); color: #fff; font-size: 13px; font-weight: 500; line-height: 1.4; text-align: left; white-space: normal; opacity: 0; visibility: hidden; transform: translate(-50%, 4px); transition: opacity .18s ease, transform .18s ease, visibility .18s; pointer-events: none; }
