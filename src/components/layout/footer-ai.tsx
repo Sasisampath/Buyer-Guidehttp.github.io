@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AI_PROVIDERS, AI_PROVIDER_ORDER, JAZZHQ_AI_PROMPT, copyJazzHQPrompt, openAIProvider, openJazzHQWithAI, type AIProviderKey } from "@/lib/jazzhq-ai";
+import { asset } from "@/lib/asset";
 import { FooterTip } from "./footer-tip";
 
 // "Summarize with AI" tiles: click → copy the JazzHQ brief → open the provider
@@ -55,7 +56,7 @@ export function FooterAI() {
             <FooterTip key={key} align={index === 0 ? "start" : index === AI_PROVIDER_ORDER.length - 1 ? "end" : "center"} tip={`Ask ${label}`}>
               <button type="button" className="site-footer__ai-logo" aria-label={`Ask ${label} about JazzHQ`} onClick={() => ask(key)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={logo} alt="" width={30} height={30} loading="lazy" />
+                <img src={asset(logo)} alt="" width={30} height={30} loading="lazy" />
               </button>
             </FooterTip>
           );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import { footerColumns, footerLegal, type FooterLink } from "@/data/footer";
 import { ROUTES } from "@/data/navigation";
 import { NavItem } from "@/components/layout/nav-item";
@@ -47,7 +48,7 @@ export function Footer() {
             <div className="site-footer__brand">
               <Link href={ROUTES.home} className="site-footer__logo" aria-label="JazzHQ home">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/logo/jazzhq-white.svg" alt="JazzHQ" width={245} height={40} loading="lazy" />
+                <img src={asset("/assets/logo/jazzhq-white.svg")} alt="JazzHQ" width={245} height={40} loading="lazy" />
               </Link>
 
               <p className="site-footer__follow">Follow us on</p>
@@ -55,7 +56,7 @@ export function Footer() {
                 {SOCIAL_LINKS.map(({ href, icon, label }) => (
                   <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={icon} alt="" width={22} height={22} loading="lazy" />
+                    <img src={asset(icon)} alt="" width={22} height={22} loading="lazy" />
                   </a>
                 ))}
               </div>
@@ -68,7 +69,7 @@ export function Footer() {
                       tip={<><span className="site-tip__title">{mark.title}</span><span className="site-tip__desc">{mark.description}</span></>}
                     >
                       <button type="button" className="site-footer__mark" aria-label={`${mark.title}: ${mark.description}`}>
-                        <Image src={mark.src} alt="" width={60} height={60} />
+                        <Image src={asset(mark.src)} alt="" width={60} height={60} />
                       </button>
                     </FooterTip>
                   </li>

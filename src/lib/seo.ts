@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import { asset, BASE_PATH } from "./asset";
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || `http://localhost:3000${BASE_PATH}`).replace(/\/$/, "");
 export const SITE_NAME = "JazzHQ";
 export const DEFAULT_TITLE = "JazzHQ";
 export const DEFAULT_DESCRIPTION =
   "JazzHQ empowers you with AI-powered products, services, and expert guidance for partner-driven businesses.";
 export const DEFAULT_OG_IMAGE = "/assets/WebsitePreview.png";
-export const DEFAULT_SITE_ICON = "/assets/logo/monogram.png";
+export const DEFAULT_SITE_ICON = asset("/assets/logo/monogram.png");
 
 // This standalone site is never indexed: every page uses these robots settings.
 export const NOINDEX_ROBOTS: NonNullable<Metadata["robots"]> = {
@@ -21,25 +22,17 @@ type PageSeoOptions = {
   image?: string;
 };
 
-function pageUrls(path: string) {
-  const canonical = path === "/" || !path ? "/" : path.replace(/\/$/, "");
-  const absolute =
-    canonical === "/" ? `${SITE_URL}/` : `${SITE_URL}${canonical}`;
-
-  return { canonical, absolute };
-}
-
 export function canonicalUrl(path: string) {
-  return pageUrls(path).absolute;
+  return `${SITE_URL}${path.replace(/\/$/, "")}/`;
 }
 
 export function pageAlternates(
   path: string,
 ): NonNullable<Metadata["alternates"]> {
-  const { canonical, absolute } = pageUrls(path);
+  const absolute = canonicalUrl(path);
 
   return {
-    canonical,
+    canonical: absolute,
     languages: {
       "x-default": absolute,
       "en-US": absolute,
@@ -54,7 +47,7 @@ export function pageSeo({
   image = DEFAULT_OG_IMAGE,
 }: PageSeoOptions): Metadata {
   const url = canonicalUrl(path);
-  const ogImage = image.startsWith("http") ? image : `${SITE_URL}${image}`;
+  const ogImage = image.startsWith("http") ? image : `${new URL(SITE_URL).origin}${asset(image)}`;
 
   return {
     title,

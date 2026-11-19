@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { JOURNEYS, NAV_ITEMS, ROUTES } from "@/data/navigation";
@@ -74,7 +75,7 @@ export function Header() {
     <header className="site-header">
       <div className="site-header__inner">
         <Link href={ROUTES.home} className="site-header__logo" aria-label="JazzHQ home">
-          <Image src="/assets/logo/jazzhq.svg" alt="JazzHQ" width={132} height={32} priority />
+          <Image src={asset("/assets/logo/jazzhq.svg")} alt="JazzHQ" width={132} height={32} priority />
         </Link>
 
         <nav className="site-header__nav" aria-label="Primary">

@@ -5,6 +5,7 @@ import {
   contentsLabel, cta, description as prmDescription, hero, intro, method, productLabels, products as prmProducts,
   route as prmRoute, scrollHint, sectionCopy, sections, tableHeaders,
 } from "@/data/prm-guide";
+import { asset } from "@/lib/asset";
 import { countWords } from "@/lib/reading-time";
 
 export type BuyerGuide = {
@@ -55,7 +56,7 @@ export const buyerGuides: BuyerGuide[] = [
     description: firstSentence(aiCoaching.description),
     platforms: aiCoaching.products.length,
     words: aiCoachingWords,
-    banner: `${aiCoaching.route}/banner.webp`,
+    banner: asset(`${aiCoaching.route}/banner.webp`),
   },
   {
     href: prmRoute,
@@ -63,7 +64,7 @@ export const buyerGuides: BuyerGuide[] = [
     description: firstSentence(prmDescription),
     platforms: prmProducts.length,
     words: prmWords,
-    banner: `${prmRoute}/banner.webp`,
+    banner: asset(`${prmRoute}/banner.webp`),
   },
   {
     href: channelRoute,
@@ -71,6 +72,6 @@ export const buyerGuides: BuyerGuide[] = [
     description: firstSentence(channelGuide.description),
     platforms: channelGuide.products.length,
     words: CHANNEL_MAIN_WORDS,
-    banner: `${channelRoute}/banner.webp`,
+    banner: asset(`${channelRoute}/banner.webp`),
   },
 ];

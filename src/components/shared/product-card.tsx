@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import type { ReactNode } from "react";
 import styles from "./guide.module.css";
 
@@ -22,7 +23,7 @@ export function Screenshot({ src, alt, width, height, caption }: {
   src: string; alt: string; width: number; height: number; caption?: ReactNode;
 }) {
   return <figure className={styles.screenshot}>
-    <Image src={src} alt={alt} width={width} height={height} unoptimized />
+    <Image src={asset(src)} alt={alt} width={width} height={height} unoptimized />
     {caption && <figcaption>{caption}</figcaption>}
   </figure>;
 }
