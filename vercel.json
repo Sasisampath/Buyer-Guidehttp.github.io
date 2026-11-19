@@ -1,0 +1,29 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/buyers-guide/",
+      "permanent": false
+    },
+    {
+      "source": "/Buyer-Guidehttp.github.io",
+      "destination": "/buyers-guide/",
+      "permanent": false
+    },
+    {
+      "source": "/Buyer-Guidehttp.github.io/buyers-guide",
+      "destination": "/buyers-guide/",
+      "permanent": false
+    },
+    {
+      "source": "/Buyer-Guidehttp.github.io/buyers-guide/best-prm-software",
+      "destination": "/buyers-guide/best-prm-software/",
+      "permanent": false
+    },
+    {
+      "source": "/Buyer-Guidehttp.github.io/buyers-guide/channel-management-software",
+      "destination": "/buyers-guide/channel-management-software/",
+      "permanent": false
+    }
+  ]
+}

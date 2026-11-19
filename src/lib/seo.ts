@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { asset, BASE_PATH } from "./asset";
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || `http://localhost:3000${BASE_PATH}`).replace(/\/$/, "");
+const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+const defaultSiteUrl = vercelHost ? `https://${vercelHost}` : `http://localhost:3000${BASE_PATH}`;
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl).replace(/\/$/, "");
 export const SITE_NAME = "JazzHQ";
 export const DEFAULT_TITLE = "JazzHQ";
 export const DEFAULT_DESCRIPTION =

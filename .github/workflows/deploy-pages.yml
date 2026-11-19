@@ -26,6 +26,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
+          NEXT_PUBLIC_GITHUB_PAGES: "true"
           NEXT_PUBLIC_SITE_URL: https://sasisampath.github.io/Buyer-Guidehttp.github.io
       - uses: actions/upload-pages-artifact@v3
         with:
