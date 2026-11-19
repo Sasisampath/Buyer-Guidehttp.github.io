@@ -4,7 +4,6 @@ export const ROUTES = {
   buyersGuides: "/buyers-guide",
   prmGuide: "/buyers-guide/best-prm-software",
   channelGuide: "/buyers-guide/channel-management-software",
-  aiCoachingGuide: "/buyers-guide/ai-coaching-platforms",
 } as const;
 // These global destinations are not available in the standalone build.
 export const NAV_ITEMS: { label: string; href: NavDestination }[] = [

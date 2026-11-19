@@ -38,7 +38,6 @@ export const footerColumns: FooterColumn[] = [
     title: "Buyer’s Guides",
     links: [
       { label: "All Buyer’s Guides", href: ROUTES.buyersGuides },
-      { label: "AI Coaching Platforms Guide", href: ROUTES.aiCoachingGuide },
       { label: "PRM Software Guide", href: ROUTES.prmGuide },
       { label: "Channel Management Guide", href: ROUTES.channelGuide },
     ],
